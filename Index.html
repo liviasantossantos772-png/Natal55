@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Magia do Natal - Loja Virtual Premium</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Neve Caindo (Efeito Visual) -->
+    <div class="snow-container" id="snowContainer"></div>
+
+    <!-- Cabeçalho / Navbar -->
+    <header class="header">
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-tree"></i> <span>Natal Magia</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="#home">Início</a>
+                <a href="#produtos">Catálogo</a>
+                <a href="#sobre">Sobre</a>
+                <a href="#contato">Contato</a>
+            </nav>
+            <div class="nav-actions">
+                <button id="btnAuth" class="btn-icon" title="Entrar / Cadastrar"><i class="fa-solid fa-user"></i></button>
+                <button id="btnCart" class="btn-icon cart-btn" title="Carrinho">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                    <span id="cartCount">0</span>
+                </button>
+                <button id="btnAdmin" class="btn-icon" title="Painel Administrativo"><i class="fa-solid fa-lock"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Conteúdo Principal -->
+    <main>
+        <!-- Seção Hero -->
+        <section id="home" class="hero-section">
+            <div class="hero-content">
+                <span class="badge-natal">Coleção Exclusiva 2026</span>
+                <h1>O NATAL DOS SEUS SONHOS COMEÇA AQUI!</h1>
+                <p>Tudo para transformar seu Natal em um momento mágico e inesquecível.</p>
+                <a href="#produtos" class="btn-primary">COMEÇAR MINHAS COMPRAS <i class="fa-solid fa-arrow-right"></i></a>
+                
+                <div class="countdown-box">
+                    <p>Faltam para o Natal:</p>
+                    <div id="countdown" class="countdown">00d 00h 00m 00s</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filtros e Categorias -->
+        <section id="produtos" class="catalog-section container">
+            <div class="section-title">
+                <h2>Catálogo de Produtos</h2>
+                <p>Explore nossas categorias natalinas selecionadas a dedo</p>
+            </div>
+
+            <div class="category-filters">
+                <button class="filter-btn active" data-category="todos">Todos</button>
+                <button class="filter-btn" data-category="Arvores">Árvores de Natal</button>
+                <button class="filter-btn" data-category="Enfeites">Enfeites</button>
+                <button class="filter-btn" data-category="Guirlandas">Guirlandas</button>
+                <button class="filter-btn" data-category="Piscas">Pisca-piscas</button>
+                <button class="filter-btn" data-category="Cestas">Cestas Natalinas</button>
+            </div>
+
+            <div id="productGrid" class="product-grid">
+                <!-- Os produtos serão injetados via JavaScript -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Botão Flutuante do WhatsApp -->
+    <a href="https://wa.me/5515998205675?text=Olá!%20Gostaria%20de%20saber%20mais%20sobre%20os%20produtos%20natalinos." class="whatsapp-float" target="_blank" title="Fale conosco pelo WhatsApp">
+        <i class="fa-brands fa-whatsapp"></i>
+    </a>
+
+    <!-- Modal do Carrinho -->
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeCart">&times;</span>
+            <h2><i class="fa-solid fa-cart-shopping"></i> Seu Carrinho de Compras</h2>
+            <div id="cartItemsList" class="cart-items-list">
+                <!-- Itens do carrinho -->
+            </div>
+            <div class="cart-summary">
+                <div class="form-group">
+                    <label for="cartObs">Observações do pedido:</label>
+                    <textarea id="cartObs" placeholder="Ex: Entregar pela manhã, embrulhar para presente..."></textarea>
+                </div>
+                <div class="total-row">
+                    <span>Total Estimado:</span>
+                    <strong id="cartTotalPrice">R$ 0,00</strong>
+                </div>
+                <button id="btnCheckout" class="btn-primary full-width">FINALIZAR PEDIDO</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Checkout / Dados de Entrega -->
+    <div id="checkoutModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeCheckout">&times;</span>
+            <h2>🎄 Revisão de Entrega</h2>
+            <form id="checkoutForm">
+                <div class="form-group">
+                    <label>Nome Completo:</label>
+                    <input type="text" id="chkNome" required>
+                </div>
+                <div class="form-group">
+                    <label>Telefone / WhatsApp:</label>
+                    <input type="text" id="chkTel" placeholder="(15) 99999-9999" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>CEP:</label>
+                        <input type="text" id="chkCep" placeholder="00000-000" maxlength="9" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Número:</label>
+                        <input type="text" id="chkNumero" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Rua:</label>
+                    <input type="text" id="chkRua" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Bairro:</label>
+                        <input type="text" id="chkBairro" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Cidade / UF:</label>
+                        <input type="text" id="chkCidadeUf" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Complemento (Opcional):</label>
+                    <input type="text" id="chkComplemento">
+                </div>
+                <button type="submit" class="btn-primary full-width">CONFIRMAR MEU PEDIDO</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Sucesso WhatsApp -->
+    <div id="whatsappModal" class="modal">
+        <div class="modal-content text-center">
+            <h2>🎄 SEU PEDIDO ESTÁ QUASE PRONTO!</h2>
+            <p>Estamos muito felizes por você escolher nossa loja! Agora vamos finalizar os detalhes, combinar o preço e acertar a entrega diretamente pelo WhatsApp.</p>
+            <a id="whatsappFinalLink" href="#" target="_blank" class="btn-whatsapp-huge">
+                <i class="fa-brands fa-whatsapp"></i> FINALIZAR PEDIDO PELO WHATSAPP
+            </a>
+        </div>
+    </div>
+
+    <!-- Modal Administrativo -->
+    <div id="adminModal" class="modal">
+        <div class="modal-content admin-content">
+            <span class="close-modal" id="closeAdmin">&times;</span>
+            <div id="adminLoginView">
+                <h2>🔐 Painel Administrativo</h2>
+                <form id="adminLoginForm">
+                    <div class="form-group">
+                        <label>Usuário:</label>
+                        <input type="text" id="adminUser" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Senha:</label>
+                        <input type="password" id="adminPass" required>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">Entrar</button>
+                </form>
+            </div>
+            <div id="adminDashboardView" style="display:none;">
+                <h2>⚙️ Painel de Controle - Loja</h2>
+                <div class="admin-tabs">
+                    <button class="tab-btn active" data-tab="admProdutos">Produtos</button>
+                    <button class="tab-btn" data-tab="admPedidos">Pedidos</button>
+                </div>
+                <div id="admProdutos" class="tab-content active">
+                    <h3>Adicionar / Gerenciar Produtos</h3>
+                    <form id="productForm">
+                        <input type="hidden" id="prodId">
+                        <div class="form-group">
+                            <label>Nome do Produto:</label>
+                            <input type="text" id="prodName" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Categoria:</label>
+                                <select id="prodCat">
+                                    <option value="Arvores">Árvores de Natal</option>
+                                    <option value="Enfeites">Enfeites</option>
+                                    <option value="Guirlandas">Guirlandas</option>
+                                    <option value="Piscas">Pisca-piscas</option>
+                                    <option value="Cestas">Cestas Natalinas</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Preço (R$) / Vazio para Consulta:</label>
+                                <input type="number" step="0.01" id="prodPrice" placeholder="Ex: 149.90">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>URL da Imagem:</label>
+                            <input type="url" id="prodImage" placeholder="https://..." required>
+                        </div>
+                        <div class="form-group">
+                            <label>Descrição:</label>
+                            <textarea id="prodDesc" required></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary">Salvar Produto</button>
+                    </form>
+                    <hr>
+                    <h4>Produtos Cadastrados</h4>
+                    <div id="adminProductList" class="admin-product-list"></div>
+                </div>
+                <div id="admPedidos" class="tab-content">
+                    <h3>Pedidos Recebidos</h3>
+                    <div id="adminOrdersList"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Natal Magia - Todos os direitos reservados. Experiência de Natal Premium.</p>
+            <p>Atendimento exclusivo via WhatsApp: (15) 99820-5675</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
